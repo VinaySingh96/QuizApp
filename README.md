@@ -1,79 +1,116 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Boilerplate App
 
-# Getting Started
+A robust React Native boilerplate for building modern applications. This boilerplate includes a variety of features and pre-built components to streamline development.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
+- **Authentication**: 
+  - Login Screen
+  - Signup Screen
+  - OTP Verification Screen
+- **Payment System**: 
+  - Integrated payment screen for seamless transactions.
+- **Navigation**:
+  - Multi-screen navigation with React Navigation.
+- **State Management**: 
+  - Context API for global state management.
+- **Theming**:
+  - Light and dark mode support.
+- **Utilities and Helpers**: 
+  - Input validation, reusable styles, and helper functions.
 
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+## Project Structure
+```plaintext
+src
+├── api
+│   ├── auth.js
+│   ├── index.js
+│   └── user.js
+├── assets
+│   ├── otp.jpg
+│   ├── payment.jpg
+│   |...
+├── components
+│   ├── Avatar.js
+│   ├── Button.js
+│   |...
+├── constants
+│   ├── AppInfo.js
+│   ├── Colour.js
+│   |...
+├── context
+│   ├── DimensionContext.js
+│   └── ThemeContext.js
+├── helper
+├── screens
+│   ├── home
+│   │   └── Home.js
+|   |...
+├── utils
+│   |...
+└── App.js
 ```
 
-## Step 2: Start your Application
+## Screens
+### 1. Login Screen
+- Allows users to log in to the application.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+### 2. Signup Screen
+- Enables user registration with fields for name and exam selection.
 
-### For Android
+### 3. OTP Screen
+- Auto-fills OTP from SMS and verifies the user.
 
-```bash
-# using npm
-npm run android
+### 4. Payment Screen
+- Displays total amount and collects billing information.
 
-# OR using Yarn
-yarn android
-```
+### 5. Home Screen
+- The main dashboard of the application.
 
-### For iOS
+### 6. Settings Screen
+- Allows users to customize their preferences.
 
-```bash
-# using npm
-npm run ios
+### 7. Splash Screen
+- A splash screen for loading the app.
 
-# OR using Yarn
-yarn ios
-```
+## Components
+- **Button**: Reusable button component with customizable labels and icons.
+- **CustomInput**: Input field with animated placeholder functionality.
+- **Modal**: Customizable modal component.
+- **Divider**: Reusable divider for UI consistency.
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## Constants
+- **AppInfo.js**: Contains app metadata and configuration.
+- **Colour.js**: Defines theme colors.
+- **Exams.js**: Lists common exams in India (e.g., SSC, UPSC).
+- **Font.js**: Defines font sizes and styles.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+## Utils
+- **Validator.js**: Includes email and input validation functions.
+- **DefaultStyle.js**: Contains reusable style definitions.
 
-## Step 3: Modifying your App
+## Setup
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd <project-directory>
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Run the app:
+   ```bash
+   npm run android
+   # or
+   npm run ios
+   ```
 
-Now that you have successfully run the app, let's modify it.
+## Usage
+- Modify constants and components according to your application's requirements.
+- Extend screens and features as needed.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## License
+This project is licensed under the MIT License.
