@@ -18,7 +18,7 @@ import RazorpayCheckout from 'react-native-razorpay';
 
 const Payment = () => {
   // Get name and contact number from user context
-  const [address, setAddress] = useState('4th Floor Yashoda Nivas, HSR, Bengaluru, Karnataka, India');
+  const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const amount = 1000.0;
   const name = 'Vinay';
