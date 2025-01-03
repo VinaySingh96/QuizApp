@@ -21,7 +21,7 @@ const Payment = () => {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const amount = 1000.0;
-  const name = 'Vinay';
+  const name = 'User Name';
 
   const paymentData = {
     description: 'Demo Payment',
