@@ -34,22 +34,3 @@ export const getToken = async () => {
     return null;
   }
 };
-
-/**
- * Authenticate the user by checking if a token exists
- * @returns {Promise<boolean>} - True if authenticated, false otherwise
- */
-export const authenticate = async () => {
-  try {
-    const token = await getToken();
-    if (token) {
-      console.log('User authenticated. Token = ', token);
-      return true;
-    }
-    console.log('User not authenticated.');
-    return false;
-  } catch (error) {
-    console.error('Error during authentication:', error);
-    return false;
-  }
-};

@@ -32,7 +32,7 @@ const Splash = ({onFinish}) => {
       }),
       Animated.timing(opacityAnim, {
         toValue: 0, // Fade out
-        duration: 500, // Same duration as zoom for synchronization
+        duration: 1500, // Same duration as zoom for synchronization
         delay: 200, // Slight delay to keep the image visible initially
         easing: Easing.inOut(Easing.ease), // Smooth easing curve
         useNativeDriver: true,

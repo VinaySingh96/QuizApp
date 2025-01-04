@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import RootNavigator from './root/RootNavigator';
 import {DimensionProvider} from '../context/DimensionContext';
 import {ThemeProvider} from '../context/ThemeContext';
+import {UserProvider} from '../context/UserContext';
 import Splash from './splash/Splash';
 
 const Index = () => {
@@ -12,15 +13,17 @@ const Index = () => {
   };
 
   return (
-    <ThemeProvider>
-      <DimensionProvider>
-        {isSplashVisible ? (
-          <Splash onFinish={handleSplashFinish} />
-        ) : (
-          <RootNavigator />
-        )}
-      </DimensionProvider>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <DimensionProvider>
+          {isSplashVisible ? (
+            <Splash onFinish={handleSplashFinish} />
+          ) : (
+            <RootNavigator />
+          )}
+        </DimensionProvider>
+      </ThemeProvider>
+    </UserProvider>
   );
 };
 

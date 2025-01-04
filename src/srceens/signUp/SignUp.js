@@ -15,7 +15,7 @@ import {FONT_SIZES} from '../../constants/Font';
 import {EXAMS} from '../../constants/Exams';
 import ButtonComponent from '../../components/Button';
 
-const SignUp = ({navigation}) => {
+const SignUp = ({navigation, phoneNumber}) => {
   const [name, setName] = useState('');
   const [selectedExam, setSelectedExam] = useState(null);
 
@@ -28,7 +28,13 @@ const SignUp = ({navigation}) => {
       'Success',
       `Welcome, ${name}! You are preparing for: ${selectedExam}`,
     );
-    navigation.navigate('Otp');
+    navigation.navigate('Otp', {
+      user: {
+        name: name,
+        exam: selectedExam,
+      },
+      phoneNumber: phoneNumber
+    });
   };
 
   return (

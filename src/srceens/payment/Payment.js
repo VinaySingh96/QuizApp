@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import ButtonComponent from '../../components/Button';
 import CustomInput from '../../components/CustomInput';
 import {DefaultStyle} from '../../utils/DefaultStyle';
@@ -15,6 +15,7 @@ import {FONT_SIZES} from '../../constants/Font';
 import {buttonColor, THEME_COLOR} from '../../constants/Colour';
 import {validateEmail} from '../../utils/Validator';
 import RazorpayCheckout from 'react-native-razorpay';
+import {UserContext} from '../../context/UserContext';
 
 const Payment = () => {
   // Get name and contact number from user context
@@ -22,18 +23,20 @@ const Payment = () => {
   const [email, setEmail] = useState('');
   const amount = 1000.0;
   const name = 'User Name';
-
+  const {user} = useContext(UserContext);
+  console.log(user);
   const paymentData = {
     description: 'Demo Payment',
-    image: 'https://img.freepik.com/free-vector/creative-gradient-code-logo_23-2148820572.jpg?t=st=1735917245~exp=1735920845~hmac=8f9ecd75b7f91425288a14ecab02024bcb92a453307d82b9f2ee491f6caebbf9&w=1060', // Recept image 
+    image:
+      'https://img.freepik.com/free-vector/creative-gradient-code-logo_23-2148820572.jpg?t=st=1735917245~exp=1735920845~hmac=8f9ecd75b7f91425288a14ecab02024bcb92a453307d82b9f2ee491f6caebbf9&w=1060', // Recept image
     currency: 'INR',
     key: process.env.RAZORPAY_KEY_ID, // Your api key
     amount: amount * 100.0,
     name: 'AppName',
     prefill: {
       email: email,
-      contact: '9191919191',
-      name: name,
+      contact: user.phoneNumber,
+      name: user.name,
     },
     theme: {color: THEME_COLOR.primary},
   };
@@ -61,13 +64,19 @@ const Payment = () => {
 
         <Text style={styles.heading}>Total amount : ₹{amount}</Text>
 
-        <CustomInput placeholder="Name" value={name} disabled={true} />
+        <CustomInput placeholder="Name" value={user.name} disabled={true} />
+        <CustomInput
+          placeholder="Phone Number"
+          value={user.phoneNumber}
+          disabled={true}
+        />
 
         {/* Billing Email */}
         <CustomInput
           placeholder="Email"
           value={email}
           onChangeText={setEmail}
+          error={email ? (validateEmail(email) ? null : 'Enter a valid email id') : null}
         />
 
         {/* Billing Address */}
@@ -84,7 +93,7 @@ const Payment = () => {
         <ButtonComponent
           label={`Continue`}
           onPress={handlePayment}
-          iconRight="chevron-right"
+          iconRight="keyboard-double-arrow-right"
           disabled={!(amount && name && validateEmail(email) && address)}
         />
       </View>

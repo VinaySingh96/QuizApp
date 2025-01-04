@@ -7,11 +7,10 @@ import {DefaultStyle} from '../../utils/DefaultStyle';
 import {textColor} from '../../constants/Colour';
 import ButtonComponent from '../../components/Button';
 import PhoneInput from 'react-native-phone-number-input';
-import {fetchUserProfile} from '../../api/user';
+import {login} from '../../api/auth';
 
 const SignIn = ({navigation}) => {
   const {width} = useContext(DimensionContext);
-
   const styles = StyleSheet.create({
     container: {},
     heading: {
@@ -26,13 +25,13 @@ const SignIn = ({navigation}) => {
   const handleContinue = async () => {
     const isValidNumber = phoneInput.current?.isValidNumber(formattedValue); // Check if the phone number is valid
     if (isValidNumber) {
-      const user = await fetchUserProfile(formattedValue);
-      if (user) {
+      const {isNewUser} = await login(formattedValue);
+      if (!isNewUser) {
         // navigate to otp screen
-        navigation.navigate('Otp');
+        navigation.navigate('Otp', { phoneNumber: formattedValue });
       } else {
         // navigate to signup screen
-        navigation.navigate('SignUp');
+        navigation.navigate('SignUp', {phoneNumber: formattedValue});
       }
       // Handle navigation or next step
     } else {

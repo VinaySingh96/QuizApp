@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
-import { Text, TextInput, View, StyleSheet, Animated } from 'react-native';
+import React, {useState} from 'react';
+import {Text, TextInput, View, StyleSheet, Animated} from 'react-native';
+import {buttonColor, textColor} from '../constants/Colour';
 
-const CustomInput = ({ placeholder, value, onChangeText, disabled, required }) => {
+const CustomInput = ({
+  placeholder,
+  value,
+  onChangeText,
+  disabled,
+  required,
+  error = null,
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const animatedLabel = new Animated.Value(value ? 1 : 0);
 
@@ -36,27 +44,38 @@ const CustomInput = ({ placeholder, value, onChangeText, disabled, required }) =
       inputRange: [0, 1],
       outputRange: [16, 12], // Shrink the label size
     }),
-    color: isFocused || value ? '#6200EE' : '#aaa',
+    color: isFocused || value ? textColor.placeholder : '#aaa',
   };
 
   return (
-    <View style={styles.container}>
-      <Animated.Text style={labelStyle}>{placeholder} {required ? '*' : ''}</Animated.Text>
-      <TextInput
-        style={[styles.input, disabled && styles.disabledInput]}
-        value={value}
-        onChangeText={onChangeText}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        editable={!disabled}
-      />
+    <View style={styles.formContainer}>
+      <View style={styles.inputContainer}>
+        <Animated.Text style={labelStyle}>
+          {placeholder} {required ? '*' : ''}
+        </Animated.Text>
+        <TextInput
+          style={[
+            styles.input,
+            disabled && styles.disabledInput,
+            error && styles.errorInput, // Apply error style if error exists
+          ]}
+          value={value}
+          onChangeText={onChangeText}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          editable={!disabled}
+        />
+      </View>
+      {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  formContainer: {
     marginVertical: 15,
+  },
+  inputContainer: {
     borderBottomWidth: 1,
     borderColor: '#aaa',
     position: 'relative',
@@ -70,6 +89,14 @@ const styles = StyleSheet.create({
   disabledInput: {
     backgroundColor: '#f5f5f5',
     color: '#999',
+  },
+  errorInput: {
+    borderBottomColor: 'red', // Highlight border in red when there's an error
+  },
+  errorText: {
+    color: textColor.danger,
+    fontSize: 12,
+    marginTop: 4,
   },
 });
 

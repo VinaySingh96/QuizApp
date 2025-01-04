@@ -1,24 +1,32 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import HomeScreen from '../home/Home';
 import SignInScreen from '../signIn/SignIn';
-import { authenticate } from '../../helper/Storage';
+import { getToken } from '../../helper/Storage';
 import OtpScreen from '../otp/OtpScreen';
 import SignUpScreen from '../signUp/SignUp';
 import PaymentScreen from '../payment/Payment';
+import { UserContext } from '../../context/UserContext';
+import { fetchUserProfile } from '../../api/user';
 
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Manage authentication state
+  const {setUser} = useContext(UserContext);
 
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const isAuthenticated = await authenticate();
-        if (!isAuthenticated) setIsAuthenticated(false);
-        else setIsAuthenticated(true);
+        const token = await getToken();
+        console.log(token);
+        if (!token) setIsAuthenticated(false);
+        else {
+          const response = await fetchUserProfile(token);
+          setUser(response.user)
+          setIsAuthenticated(true);
+        }
       } catch (error) {
         console.error('Error checking token:', error);
         setIsAuthenticated(false);

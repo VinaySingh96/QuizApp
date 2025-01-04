@@ -1,13 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, Alert, SafeAreaView, Image} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {StyleSheet, Text, View, Alert, SafeAreaView, Image, ToastAndroid} from 'react-native';
 import OTPInputView from 'react-native-otp-input';
 import RNOtpVerify from 'react-native-otp-verify';
 import ButtonComponent from '../../components/Button';
 import {saveToken} from '../../helper/Storage';
 import {DefaultStyle} from '../../utils/DefaultStyle';
+import { register, verifyOtp } from '../../api/auth';
+import { UserContext } from '../../context/UserContext';
+import { fetchUserProfile } from '../../api/user';
 
-const OtpScreen = ({navigation}) => {
+const OtpScreen = ({navigation, user, phoneNumber}) => {
   const [otp, setOtp] = useState('1234');
+  const {setUser} = useContext(UserContext);
 
   useEffect(() => {
     RNOtpVerify.getOtp()
@@ -28,10 +32,20 @@ const OtpScreen = ({navigation}) => {
 
   const handleVerify = async () => {
     console.log('OTP = ', otp);
-    // TODO: replace with actual otp
-    if (otp === '1234') {
-      await saveToken('token');
-      Alert.alert('OTP Verified Successfully');
+    
+    const res = await verifyOtp(phoneNumber, otp);
+    if (res.success) {
+      await saveToken(res.token);
+      let response;
+      if (user) {
+        response = await register({...user, phoneNumber});
+      }
+      else {
+        response = await fetchUserProfile(res.token);
+      }
+      // save user to user context
+      setUser(response.user);
+      ToastAndroid.show('OTP Verified Successfully', ToastAndroid.BOTTOM);
       navigation.reset({
         index: 0,
         routes: [{name: 'Home'}],

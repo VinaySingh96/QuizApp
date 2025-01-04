@@ -8,7 +8,9 @@ export const textColor = {
   dark:'#343A40',
 
   heading: '#1A1A1D',
-  subtext: '#1A1A1D'
+  subtext: '#1A1A1D',
+
+  placeholder: '#326AEB'
 }
 
 export const buttonColor = {
