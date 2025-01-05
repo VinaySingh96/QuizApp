@@ -30,9 +30,7 @@ const OtpScreen = ({navigation, user, phoneNumber}) => {
     }
   };
 
-  const handleVerify = async () => {
-    console.log('OTP = ', otp);
-    
+  const handleVerify = async () => {    
     const res = await verifyOtp(phoneNumber, otp);
     if (res.success) {
       await saveToken(res.token);
@@ -48,7 +46,7 @@ const OtpScreen = ({navigation, user, phoneNumber}) => {
       ToastAndroid.show('OTP Verified Successfully', ToastAndroid.BOTTOM);
       navigation.reset({
         index: 0,
-        routes: [{name: 'Home'}],
+        routes: [{name: 'Dashboard'}],
       });
     } else {
       Alert.alert('Invalid OTP', 'Please try again.');
@@ -56,7 +54,7 @@ const OtpScreen = ({navigation, user, phoneNumber}) => {
   };
 
   return (
-    <SafeAreaView style={DefaultStyle.backgroundColor}>
+    <SafeAreaView style={DefaultStyle.lightBackground}>
       <View style={DefaultStyle.p2}>
         <View>
           <Image

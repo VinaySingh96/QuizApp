@@ -3,9 +3,11 @@ import {
   Text,
   SafeAreaView,
   Image,
-  TextInput,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import React, {useContext, useState} from 'react';
 import ButtonComponent from '../../components/Button';
@@ -18,19 +20,17 @@ import RazorpayCheckout from 'react-native-razorpay';
 import {UserContext} from '../../context/UserContext';
 
 const Payment = () => {
-  // Get name and contact number from user context
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const amount = 1000.0;
-  const name = 'User Name';
   const {user} = useContext(UserContext);
-  console.log(user);
+
   const paymentData = {
     description: 'Demo Payment',
     image:
-      'https://img.freepik.com/free-vector/creative-gradient-code-logo_23-2148820572.jpg?t=st=1735917245~exp=1735920845~hmac=8f9ecd75b7f91425288a14ecab02024bcb92a453307d82b9f2ee491f6caebbf9&w=1060', // Recept image
+      'https://img.freepik.com/free-vector/creative-gradient-code-logo_23-2148820572.jpg?t=st=1735917245~exp=1735920845~hmac=8f9ecd75b7f91425288a14ecab02024bcb92a453307d82b9f2ee491f6caebbf9&w=1060',
     currency: 'INR',
-    key: process.env.RAZORPAY_KEY_ID, // Your api key
+    key: process.env.RAZORPAY_KEY_ID,
     amount: amount * 100.0,
     name: 'AppName',
     prefill: {
@@ -41,11 +41,9 @@ const Payment = () => {
     theme: {color: THEME_COLOR.primary},
   };
 
-  // main logic should be handled in payment helper
   const handlePayment = async () => {
     try {
       const res = await RazorpayCheckout.open(paymentData);
-      // TODO: save response(razorpay_payment_id) to db(api call)
       Alert.alert('Payment Successful');
     } catch (error) {
       console.log(error);
@@ -53,58 +51,60 @@ const Payment = () => {
   };
 
   return (
-    <SafeAreaView style={DefaultStyle.backgroundColor}>
-      <View style={DefaultStyle.p2}>
-        <View>
-          <Image
-            source={require('../../assets/payment.jpg')}
-            style={DefaultStyle.welcomeImage}
+    <SafeAreaView style={DefaultStyle.lightBackground}>
+      <KeyboardAvoidingView
+        style={DefaultStyle.p2}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <ScrollView
+          contentContainerStyle={DefaultStyle.scrollContainer}
+          keyboardShouldPersistTaps="handled">
+          <View>
+            <Image
+              source={require('../../assets/payment.jpg')}
+              style={DefaultStyle.welcomeImage}
+            />
+          </View>
+
+          <Text style={styles.heading}>Total amount : ₹{amount}</Text>
+
+          <CustomInput placeholder="Name" value={user.name} disabled={true} />
+          <CustomInput
+            placeholder="Phone Number"
+            value={user.phoneNumber}
+            disabled={true}
           />
-        </View>
 
-        <Text style={styles.heading}>Total amount : ₹{amount}</Text>
+          <CustomInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            error={
+              email ? (validateEmail(email) ? null : 'Enter a valid email id') : null
+            }
+          />
 
-        <CustomInput placeholder="Name" value={user.name} disabled={true} />
-        <CustomInput
-          placeholder="Phone Number"
-          value={user.phoneNumber}
-          disabled={true}
-        />
+          <CustomInput
+            placeholder="Billing Address"
+            value={address}
+            onChangeText={setAddress}
+            required={true}
+          />
 
-        {/* Billing Email */}
-        <CustomInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          error={email ? (validateEmail(email) ? null : 'Enter a valid email id') : null}
-        />
-
-        {/* Billing Address */}
-        <CustomInput
-          placeholder="Billing Address"
-          value={address}
-          onChangeText={setAddress}
-          required={true}
-        />
-
-        {/* Exam Dropdown */}
-
-        {/* Sign Up Button */}
-        <ButtonComponent
-          label={`Continue`}
-          onPress={handlePayment}
-          iconRight="keyboard-double-arrow-right"
-          disabled={!(amount && name && validateEmail(email) && address)}
-        />
-      </View>
+          <ButtonComponent
+            label={`Continue`}
+            onPress={handlePayment}
+            iconRight="keyboard-double-arrow-right"
+            disabled={!(amount && validateEmail(email) && address)}
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
+  flexContainer: {
+    // flex: 1,
   },
   heading: {
     fontSize: FONT_SIZES.HEADING,
@@ -112,27 +112,6 @@ const styles = StyleSheet.create({
     color: buttonColor.primary,
     textAlign: 'center',
     marginBottom: 20,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    fontSize: FONT_SIZES.INPUT,
-    marginBottom: 15,
-    color: '#333',
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    marginBottom: 15,
-    overflow: 'hidden',
-  },
-  dropdown: {
-    fontSize: FONT_SIZES.INPUT,
-    padding: 12,
-    color: '#333',
   },
 });
 

@@ -2,8 +2,11 @@ import apiClient from './index';
 
 export const login = async phoneNumber => {
   try {
-    const response = await apiClient.post('/auth/login', phoneNumber);
-    return response.data;
+    // const response = await apiClient.post('/auth/login', phoneNumber);
+    // return response.data;
+    return {
+      isNewUser: false
+    }
   } catch (error) {
     console.error('Login API Error:', error);
     throw error;
@@ -22,8 +25,12 @@ export const register = async userDetails => {
 
 export const verifyOtp = async (phoneNumber, otp) => {
   try {
-    const response = await apiClient.post('/auth/verify-otp', {phoneNumber, otp});
-    return response.data;
+    // const response = await apiClient.post('/auth/verify-otp', {phoneNumber, otp});
+    // return response.data;
+    return {
+      success: true,
+      token: 'JWT-token'
+    };
   } catch (error) {
     console.error('Verify OTP Error:', error);
     throw error;

@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from 'react'
-import { SafeAreaView, Text, View } from 'react-native'
-import ButtonComponent from '../../components/Button'
-import { DefaultStyle } from '../../utils/DefaultStyle'
-import { getToken, saveToken } from '../../helper/Storage'
-import { UserContext } from '../../context/UserContext'
+import React from 'react';
+import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {DefaultStyle} from '../../utils/DefaultStyle';
+import {saveToken} from '../../helper/Storage';
+import Divider from '../../components/Divider';
+import FeatureCard from '../../components/FeatureCard';
 
-const Home = ({ navigation }) => {
+
+const Home = ({navigation}) => {
   const handleMakePayment = () => {
     navigation.navigate('Payment');
-  }
+  };
 
   // useEffect(async() => {
   //   console.log(await getToken());
@@ -20,18 +21,52 @@ const Home = ({ navigation }) => {
     await saveToken(null);
     navigation.reset({
       index: 0,
-      routes: [{name: 'SignIn'}]
-    })
-  }
-  
+      routes: [{name: 'SignIn'}],
+    });
+  };
+
   return (
     <SafeAreaView>
-      <View style={DefaultStyle.p2}>
-        <ButtonComponent label={'Make Payment'} iconRight={'account-balance-wallet'} onPress={handleMakePayment} />
-        <ButtonComponent label={'Logout'} iconRight={'logout'} onPress={handleLogout} />
-      </View>
+      <ScrollView>
+        <View style={DefaultStyle.dashboardContainer}>
+          {/* Available Features */}
+          <View style={[DefaultStyle.cardContainer, {marginTop: 8}]}>
+            <Text style={DefaultStyle.fontBold}>Features</Text>
+            <Divider />
+            <View
+              style={{
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                rowGap: 16,
+                columnGap: 32,
+                padding: 10,
+              }}>
+              <FeatureCard
+                feature={'Tests'}
+                image={require('../../assets/tests.jpg')}
+                onPress={() => navigation.navigate('Tests')}
+                />
+              <FeatureCard
+                feature={'Notes'}
+                image={require('../../assets/notes.jpg')}
+                onPress={() => navigation.navigate('Notes')}
+                />
+              <FeatureCard
+                feature={'My History'}
+                image={require('../../assets/history.jpg')}
+                onPress={() => navigation.navigate('History')}
+              />
+              <FeatureCard
+                feature={'More features coming soon...'}
+                image={require('../../assets/more.jpg')}
+              />
+            </View>
+          </View>
+        </View>
+        {/* <SubmitModal /> */}
+      </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default Home;

@@ -10,7 +10,11 @@ export const textColor = {
   heading: '#1A1A1D',
   subtext: '#1A1A1D',
 
-  placeholder: '#326AEB'
+  placeholder: '#326AEB',
+  gray: '#9AA6B2',
+  lightGray: '#8F9498',
+
+  warningDark: '#EC9006',
 }
 
 export const buttonColor = {

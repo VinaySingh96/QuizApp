@@ -40,7 +40,7 @@ const SignIn = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={DefaultStyle.backgroundColor}>
+    <SafeAreaView style={DefaultStyle.lightBackground}>
       <View style={DefaultStyle.p2}>
         <View>
           <Image

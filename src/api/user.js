@@ -2,12 +2,21 @@ import apiClient from './index';
 
 export const fetchUserProfile = async (token) => {
   try {
-    const response = await apiClient.get('/user', {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    // const response = await apiClient.get('/user', {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+    // return response.data;
+    return {
+      user: {
+        name: 'Aakash',
+        phoneNumber: '9793993020',
+        exam: 'react_ui',
+        email: 'aakash@sky.com'
       },
-    });
-    return response.data;
+      success: true
+    };
   } catch (error) {
     console.error('Fetch User Profile Error:', error);
     return null;

@@ -7,7 +7,7 @@ const Divider = ({ color = '#ccc', thickness = 1, marginVertical = 10 }) => {
 
 const styles = StyleSheet.create({
   divider: {
-    width: '100%',
+    // width: '100%',
   },
 });
 
