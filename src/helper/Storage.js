@@ -1,4 +1,5 @@
 import MMKVStorage from 'react-native-mmkv-storage';
+import { defaultPreference, USER_PREFERENCE } from '../constants/UserPreferences';
 
 // Initialize MMKV storage
 const MMKV = new MMKVStorage.Loader().initialize();
@@ -34,3 +35,26 @@ export const getToken = async () => {
     return null;
   }
 };
+
+let userPreferences;
+
+export const saveUserPreferences = async ({ key, value }) => {
+  let currentPreference = await getUserPreferences();
+  if (!currentPreference) currentPreference = defaultPreference;
+  currentPreference[key] = value;
+
+  userPreferences = currentPreference;
+
+  await MMKV.setStringAsync(USER_PREFERENCE, JSON.stringify(currentPreference));
+};
+
+export const getUserPreferences = async () => {
+  const stringData = await MMKV.getStringAsync(USER_PREFERENCE);
+  if (!stringData) userPreferences = defaultPreference;
+
+  userPreferences = JSON.parse(stringData);
+};
+
+export const getLoadedpreference = (key) => {
+  return userPreferences[key];
+}

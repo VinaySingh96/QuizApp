@@ -8,7 +8,8 @@ const deviceHeight = Dimensions.get('window').height;
 export const DefaultStyle = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 2,
+    // padding: 2,
+    // width: deviceWidth,
     backgroundColor: '#f5f5f5',
   },
   itemsCenter: {
@@ -78,6 +79,7 @@ export const DefaultStyle = StyleSheet.create({
 
   cardContainer: {
     padding: 8,
+    width: deviceWidth,
     backgroundColor: '#FFFFFF',
   },
   dashboardContainer: {
@@ -102,7 +104,8 @@ export const DefaultStyle = StyleSheet.create({
     shadowRadius: 6,
   },
   scrollContainer: {
-    height: Dimensions.get('window').height - 200,
+    height: deviceHeight - 200,
+    // width: deviceWidth,
     // paddingHorizontal: 20,
     paddingBottom: 20,
   },

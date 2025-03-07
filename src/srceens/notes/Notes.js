@@ -1,4 +1,4 @@
-import {View, Text, SafeAreaView, ScrollView} from 'react-native';
+import {View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
 import {DefaultStyle} from '../../utils/DefaultStyle';
 import Header from '../../components/Header';
@@ -31,11 +31,15 @@ const Notes = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={DefaultStyle.container}>
       <Header title={'Notes'} onPress={() => navigation.goBack()} />
       <View style={DefaultStyle.dashboardContainer}>
         <View style={DefaultStyle.cardContainer}>
-          <Text style={DefaultStyle.fontBold}>Chapters</Text>
+          <View style={styles.headerRow}>
+            <Text style={DefaultStyle.fontBold}>Chapters</Text>
+            <Text style={DefaultStyle.fontBold}>Chapters</Text>
+            
+          </View>
           <Divider />
           <ScrollView style={DefaultStyle.scrollContainer}>
             {/* Chapters */}
@@ -54,5 +58,13 @@ const Notes = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});
 
 export default Notes;

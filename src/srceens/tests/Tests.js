@@ -1,5 +1,5 @@
 import {View, Text, SafeAreaView, ScrollView} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   MOCK_TESTS,
 } from '../../utils/MockData';
@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import {DefaultStyle} from '../../utils/DefaultStyle';
 import Divider from '../../components/Divider';
 import TestCard from '../../components/TestCard';
+import { getQuestions, getQuizTopics } from '../../api/questions';
 
 const Tests = ({navigation}) => {
   const handleTestPress = (testId) => {
@@ -14,6 +15,21 @@ const Tests = ({navigation}) => {
       testDetails: MOCK_TESTS[testId-1]
     });
   }
+
+  useEffect(() => {
+    const fetchTests = async () => {
+      try {
+        const data = await getQuizTopics();
+        // const data = await getQuestions('java');
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchTests();
+  }, [])
+  
+
   return (
     <SafeAreaView>
       <Header title={'Tests'} onPress={() => navigation.goBack()} />

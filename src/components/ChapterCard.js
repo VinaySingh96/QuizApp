@@ -5,29 +5,32 @@ import {
   Image,
   StyleSheet,
   Pressable,
+  ScrollView
 } from 'react-native';
 import {DefaultStyle} from '../utils/DefaultStyle';
 
 // Card Component
 const ChapterCard = ({title, description, imageUrl, onPress}) => {
   return (
-    <Pressable
-      onPress={onPress}
-      style={({pressed}) => [
-        styles.cardContainer,
-        {
-          opacity: pressed ? 0.7 : 1,
-        },
-      ]}>
-      {/* Chapter Image */}
-      <Image source={{uri: imageUrl}} style={styles.cardImage} />
+    <ScrollView style={DefaultStyle.p2}>
+      <Pressable
+        onPress={onPress}
+        style={({pressed}) => [
+          styles.cardContainer,
+          {
+            opacity: pressed ? 0.7 : 1,
+          },
+        ]}>
+        {/* Chapter Image */}
+        <Image source={{uri: imageUrl}} style={styles.cardImage} />
 
-      {/* Card Details */}
-      <View style={styles.cardDetails}>
-        <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.cardDescription}>{description}</Text>
-      </View>
-    </Pressable>
+        {/* Card Details */}
+        <View style={styles.cardDetails}>
+          <Text style={styles.cardTitle}>{title}</Text>
+          <Text style={styles.cardDescription}>{description}</Text>
+        </View>
+      </Pressable>
+    </ScrollView>
   );
 };
 
@@ -39,7 +42,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     ...DefaultStyle.cardShadow,
     marginBottom: 15,
-    marginHorizontal: 10,
     overflow: 'hidden',
     padding: 10,
   },

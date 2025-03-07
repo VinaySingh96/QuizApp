@@ -55,6 +55,11 @@ const Home = ({navigation}) => {
                 feature={'My History'}
                 image={require('../../assets/history.jpg')}
                 onPress={() => navigation.navigate('History')}
+                />
+              <FeatureCard
+                feature={'CS Study Materials'}
+                image={require('../../assets/studyMaterial.jpg')}
+                onPress={() => navigation.navigate('StudyMaterial')}
               />
               <FeatureCard
                 feature={'More features coming soon...'}

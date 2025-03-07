@@ -17,6 +17,8 @@ import PdfViewer from '../../components/PdfViewer';
 import TestInstructions from '../tests/TestInstructions';
 import TestExecution from '../tests/TestExecution';
 import TestResult from '../tests/TestResult';
+import HtmlViewer from '../../components/HtmlViewer';
+import StudyMaterial from '../studyMaterial/StudyMaterial';
 
 const Stack = createStackNavigator();
 
@@ -66,6 +68,8 @@ const RootNavigator = () => {
         <Stack.Screen name="TestInstructions" component={TestInstructions} />
         <Stack.Screen name="TestExecution" component={TestExecution} />
         <Stack.Screen name="TestResult" component={TestResult} />
+        <Stack.Screen name="StudyMaterial" component={StudyMaterial} />
+        <Stack.Screen name="HtmlViewer" component={HtmlViewer} />
       </Stack.Navigator>
     </NavigationContainer>
   );
